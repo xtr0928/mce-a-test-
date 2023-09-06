@@ -4,7 +4,7 @@
 #include<string>
 #include<map>
 #include<ctime>
-#include"mce(1).cpp"
+#include"mce.cpp"
 using namespace std;
 
 map<string, number> variables;
