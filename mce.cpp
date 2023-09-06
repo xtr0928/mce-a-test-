@@ -634,7 +634,7 @@ inline number division(number number1, number number2) {
         finally_number.size = number1.size - number2.size+1;
         npo = 101 + number1.size - number2.size;
     }
-    //³ıÊı
+    //é™¤æ•°
     number div[10];
     div[0].data.push_back(0);
     div[0].size = 1;
@@ -648,7 +648,7 @@ inline number division(number number1, number number2) {
         div[i] = multiplication(number2, tmp);
         div[i] = accurate_to(div[i], div[i].size);
     }
-    //ÓàÊı
+    //ä½™æ•°
     number rem;
     int idx;
     for(idx = 0; idx < number2.data.size(); idx++){
@@ -668,7 +668,7 @@ inline number division(number number1, number number2) {
     int rem_start = 0;
     int div_start = 0;
     for (uint64_t x = 0; x < npo; x++) {
-        //ÊÔ³ı·¨£¬0-9ÖĞÕÒ×î´óµÄÊı
+        //è¯•é™¤æ³•ï¼Œ0-9ä¸­æ‰¾æœ€å¤§çš„æ•°
         int left=0, right = 9;
         while(left < right){
             int mid = (left + right) / 2 + 1;
@@ -683,7 +683,7 @@ inline number division(number number1, number number2) {
             rem = subtract(rem, div[left]);
             rem.pom = 1;
         }
-         //Ğ¡ÊıµãÏòÓÒÒÆÎ»
+         //å°æ•°ç‚¹å‘å³ç§»ä½
         rem = multiplication(rem, ten);
         if(idx < number1.data.size()){
             number tmp;
@@ -693,7 +693,7 @@ inline number division(number number1, number number2) {
             rem = add(rem, tmp);
         }
         idx += 1;
-        /// È¥µôÇ°µ¼0
+        /// å»æ‰å‰å¯¼0
         while(rem.size > 1 && rem.data[0] == 0){
             rem.data.erase(rem.data.begin());
             rem.size -= 1;
