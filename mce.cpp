@@ -122,30 +122,62 @@ inline long double f_read() {
     }
     return w * s;
 }
-inline string str_read() {
-    string ans;
-    char ch = getchar();
-    while (ch == ' ' || ch == '\n' || ch == '\t') ch = getchar();
-    while (ch != ' ' && ch != '\n' && ch != '\t') ans += ch, ch = getchar();
-    return ans;
-}
-inline vector<int> vec_read() {
-    vector<int> vec(0, 0);
-    char ch = getchar();
-
-    while (ch >= '0' && ch <= '9') {
-        vec.push_back(ch - '0');
-        ch = getchar();
-    }
-    return vec;
-}
-inline vector<int> str_to_vec(string str) {
-    vector<int> vec;
-    for (int x = 0; x < str.size(); x++) {
-        if (str[x] <= 57 && str[x] >= 48) vec.push_back(str[x] - '0');
-    }
-    return vec;
-}
+inline number str_to_number(string str){
+	number finally_number;
+	bool flag=true;
+	if(str.size()==0){
+		printf("error:this str is empty");
+	}
+	if(str[0]=='-'){
+		finally_number.pom=-1;
+		if(str[1]<='9'&&str[1]>='0'){
+			finally_number.data.push_back(str[1]-'0');
+		}
+		else{
+			printf("error:there have non-numeric character");
+		}
+		for(uint64_t x=2;x<str.size();x++){
+			if(str[x]<='9'&&str[x]>='0'){
+				finally_number.data.push_back(str[x]-'0');
+			}
+			else{
+				if(str[x]=='.'){
+					finally_number.size=x-1;
+					flag=false;
+				}
+				else{
+					printf("error:there have non-numeric character");
+				}
+			}
+		}
+	}
+	else{
+		if(str[0]<='9'&&str[0]>='0'){
+			finally_number.data.push_back(str[0]-'0');
+		}
+		else{
+			printf("error:there have non-numeric character");
+		}
+		for(uint64_t x=1;x<str.size();x++){
+			if(str[x]<='9'&&str[x]>='0'){
+				finally_number.data.push_back(str[x]-'0');
+			}
+			else{
+				if(str[x]=='.'){
+					finally_number.size=x;
+					flag=false;
+				}
+				else{
+					printf("error:there have non-numeric character");
+				}
+			}
+		}
+	}
+	if(flag){
+		finally_number.size=finally_number.data.size();
+	}
+	return finally_number;
+} 
 inline void  number_out_wt(number outnumber) {
     uint64_t  size = outnumber.size - 1;
     bool flag = false;
@@ -701,4 +733,3 @@ inline number division(number number1, number number2) {
     }
     return finally_number;
 }
-
