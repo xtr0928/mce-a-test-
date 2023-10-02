@@ -20,8 +20,6 @@ struct number:
 	inline bool equaltozero(number number)若number1等于0返回true,否则返回false
 	inline number multiplication(number number1, number number2)将两个number相乘,默认精度到小数点后100位
 	inline number multiplication(number number1, number number2,uint64_t i)同上,默认精度到小数点后i位
-	个人认为需要重写(不是我写的):
-	inline bool division_check(vector<short> vec1, vector<short> vec2,uint64_t s1,uint64_t s2,uint64_t len) 除法检查,试商用
 	inline number division(number number1, number number2)将两个number相除,默认精度到小数点后100位
 tui.cpp:
 	请见代码注释,不是我写的
