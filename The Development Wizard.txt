@@ -21,5 +21,6 @@ struct number:
 	inline number multiplication(number number1, number number2)将两个number相乘,默认精度到小数点后100位
 	inline number multiplication(number number1, number number2,uint64_t i)同上,默认精度到小数点后i位
 	inline number division(number number1, number number2)将两个number相除,默认精度到小数点后100位
+	inline number division(number number1, number number2,uint64_t npo) 将两个number相除,默认精度到小数点后npo位
 tui.cpp:
 	请见代码注释,不是我写的
