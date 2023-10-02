@@ -8,7 +8,50 @@
 using namespace std;
 
 map<string, number> variables;
-
+bool parse_number(string str, number& num) {
+    num.data.clear();
+    num.size = 0;
+    if (str.empty()) {
+        return false;
+    }
+    int idx = 0;
+    char ch = str[idx++];
+    if (ch == '-') {
+        if (idx >= str.length()) {
+            return false;
+        }
+        num.pom = -1;
+        ch = str[idx++];
+    }
+    else if (ch >= '0' && ch <= '9') {
+        num.pom = 1;
+        num.data.push_back(ch - '0');
+    }
+    else {
+        return false;
+    }
+    bool flag = false;
+    while (idx < str.length()) {
+        ch = str[idx++];
+        if (ch == '.') {
+            if (flag) {
+                return false;
+            }
+            num.size = num.data.size();
+            flag = true;
+        }
+        else if (ch >= '0' && ch <= '9') {
+            num.data.push_back(ch - '0');
+        }
+        else {
+            return false;
+        }
+    }
+    if (!flag) {
+        num.size = num.data.size();
+    }
+    return true;
+}
 // 分割字符串
 vector<string> split(const string &str, char delimiter){
     vector<string> res;
