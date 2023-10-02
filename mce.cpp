@@ -3,6 +3,8 @@
 #include<iostream>
 #include<vector>
 #include <numeric>
+#include<math.h>
+#include<cmath>
 using namespace std;
 struct number {
     vector<short> data;
@@ -11,46 +13,6 @@ struct number {
     int pom = 0;
     //pom means plus or minus
 };
-bool parse_number(string str, number& num) {
-    num.data.clear();
-    num.size = 0;
-    if (str.empty()) {
-        return false;
-    }
-    int idx = 0;
-    char ch = str[idx++];
-    if (ch == '-') {
-        if (idx >= str.length()) {
-            return false;
-        }
-        num.pom = -1;
-        ch = str[idx++];
-    } else if (ch >= '0' && ch <= '9') {
-        num.pom = 1;
-        num.data.push_back(ch - '0');
-    } else {
-        return false;
-    }
-    bool flag = false;
-    while (idx < str.length()) {
-        ch = str[idx++];
-        if (ch == '.') {
-            if(flag){
-                return false;
-            }
-            num.size = num.data.size();
-            flag = true;
-        }else if(ch >= '0' && ch <= '9'){
-            num.data.push_back(ch - '0');
-        }else{
-            return false;
-        }
-    }
-    if (!flag) {
-        num.size = num.data.size();
-    }
-    return true;
-}
 inline number number_get() {
     number number;
     number.size = 0;
@@ -122,62 +84,62 @@ inline long double f_read() {
     }
     return w * s;
 }
-inline number str_to_number(string str){
-	number finally_number;
-	bool flag=true;
-	if(str.size()==0){
-		printf("error:this str is empty");
-	}
-	if(str[0]=='-'){
-		finally_number.pom=-1;
-		if(str[1]<='9'&&str[1]>='0'){
-			finally_number.data.push_back(str[1]-'0');
-		}
-		else{
-			printf("error:there have non-numeric character");
-		}
-		for(uint64_t x=2;x<str.size();x++){
-			if(str[x]<='9'&&str[x]>='0'){
-				finally_number.data.push_back(str[x]-'0');
-			}
-			else{
-				if(str[x]=='.'){
-					finally_number.size=x-1;
-					flag=false;
-				}
-				else{
-					printf("error:there have non-numeric character");
-				}
-			}
-		}
-	}
-	else{
-		if(str[0]<='9'&&str[0]>='0'){
-			finally_number.data.push_back(str[0]-'0');
-		}
-		else{
-			printf("error:there have non-numeric character");
-		}
-		for(uint64_t x=1;x<str.size();x++){
-			if(str[x]<='9'&&str[x]>='0'){
-				finally_number.data.push_back(str[x]-'0');
-			}
-			else{
-				if(str[x]=='.'){
-					finally_number.size=x;
-					flag=false;
-				}
-				else{
-					printf("error:there have non-numeric character");
-				}
-			}
-		}
-	}
-	if(flag){
-		finally_number.size=finally_number.data.size();
-	}
-	return finally_number;
-} 
+inline number str_to_number(string str) {
+    number finally_number;
+    bool flag = true;
+    if (str.size() == 0) {
+        printf("error:this str is empty");
+    }
+    if (str[0] == '-') {
+        finally_number.pom = -1;
+        if (str[1] <= '9' && str[1] >= '0') {
+            finally_number.data.push_back(str[1] - '0');
+        }
+        else {
+            printf("error:there have non-numeric character");
+        }
+        for (uint64_t x = 2; x < str.size(); x++) {
+            if (str[x] <= '9' && str[x] >= '0') {
+                finally_number.data.push_back(str[x] - '0');
+            }
+            else {
+                if (str[x] == '.') {
+                    finally_number.size = x - 1;
+                    flag = false;
+                }
+                else {
+                    printf("error:there have non-numeric character");
+                }
+            }
+        }
+    }
+    else {
+        if (str[0] <= '9' && str[0] >= '0') {
+            finally_number.data.push_back(str[0] - '0');
+        }
+        else {
+            printf("error:there have non-numeric character");
+        }
+        for (uint64_t x = 1; x < str.size(); x++) {
+            if (str[x] <= '9' && str[x] >= '0') {
+                finally_number.data.push_back(str[x] - '0');
+            }
+            else {
+                if (str[x] == '.') {
+                    finally_number.size = x;
+                    flag = false;
+                }
+                else {
+                    printf("error:there have non-numeric character");
+                }
+            }
+        }
+    }
+    if (flag) {
+        finally_number.size = finally_number.data.size();
+    }
+    return finally_number;
+}
 inline void  number_out_wt(number outnumber) {
     uint64_t  size = outnumber.size - 1;
     bool flag = false;
@@ -198,7 +160,7 @@ inline void  number_out_wt(number outnumber) {
     }
 }
 inline number accurate_to(number number, uint64_t i) {
-    if (number.data.size() - number.size <=i) {
+    if (number.data.size() - number.size <= i) {
         uint64_t nop = i - (number.data.size() - number.size);
         //the number of operations
         for (int x = 0; x < nop; x++) {
@@ -206,12 +168,12 @@ inline number accurate_to(number number, uint64_t i) {
         }
     }
     else {
-        if (number.data[number.size + i ] >= 5) {
-            number.data[number.size + i-1] += 1;
+        if (number.data[number.size + i] >= 5) {
+            number.data[number.size + i - 1] += 1;
             for (uint64_t x = number.size + i - 1; x > 0; x--) {
                 if (number.data[x] > 9) {
                     number.data[x] %= 10;
-                    number.data[x-1] ++;
+                    number.data[x - 1] ++;
                 }
                 else {
                     break;
@@ -219,7 +181,7 @@ inline number accurate_to(number number, uint64_t i) {
                 if (x == 0)break;
             }
         }
-        number.data.erase(number.data.begin()+number.size + i-1, number.data.end());
+        number.data.erase(number.data.begin() + number.size + i - 1, number.data.end());
         for (uint64_t x = number.size + i - 2; x > 0; x--) {
             if (number.data[x] == 0) {
                 number.data.pop_back();
@@ -229,7 +191,7 @@ inline number accurate_to(number number, uint64_t i) {
             }
         }
     }
-    while(number.data.size() < number.size){
+    while (number.data.size() < number.size) {
         number.data.push_back(0);
     }
     return number;
@@ -603,7 +565,7 @@ inline number multiplication(number number1, number number2) {
     finally_number = accurate_to(finally_number, 100);
     return finally_number;
 }
-inline number multiplication(number number1, number number2,uint64_t i) {
+inline number multiplication(number number1, number number2, uint64_t i) {
     number finally_number;
     if (equaltozero(number1) || equaltozero(number2)) {
         finally_number.data.push_back(0);
@@ -641,14 +603,6 @@ inline number multiplication(number number1, number number2,uint64_t i) {
     finally_number = accurate_to(finally_number, i);
     return finally_number;
 }
-inline bool division_check(vector<short> vec1, vector<short> vec2,uint64_t s1,uint64_t s2,uint64_t len) {
-    for (uint64_t x=0; x < len; x++) {
-        if (vec1[s1 + x] < vec2[s2 + x]) {
-            return true;
-        }
-    }
-    return false;
-}
 inline number division(number number1, number number2) {
     number finally_number;
     int npo = 0; // the number of operations
@@ -663,7 +617,7 @@ inline number division(number number1, number number2) {
         npo = 101 - number2.size + number1.size;
     }
     else {
-        finally_number.size = number1.size - number2.size+1;
+        finally_number.size = number1.size - number2.size + 1;
         npo = 101 + number1.size - number2.size;
     }
     //除数
@@ -672,7 +626,7 @@ inline number division(number number1, number number2) {
     div[0].size = 1;
     div[0].pom = 1;
     number2.size = number2.data.size();
-    for(short i=1;i<=9;i++){
+    for (short i = 1; i <= 9; i++) {
         number tmp;
         tmp.data.push_back(i);
         tmp.size = 1;
@@ -683,10 +637,11 @@ inline number division(number number1, number number2) {
     //余数
     number rem;
     int idx;
-    for(idx = 0; idx < number2.data.size(); idx++){
-        if(idx >= number1.data.size()){
+    for (idx = 0; idx < number2.data.size(); idx++) {
+        if (idx >= number1.data.size()) {
             rem.data.push_back(0);
-        }else{
+        }
+        else {
             rem.data.push_back(number1.data[idx]);
         }
     }
@@ -701,23 +656,24 @@ inline number division(number number1, number number2) {
     int div_start = 0;
     for (uint64_t x = 0; x < npo; x++) {
         //试除法，0-9中找最大的数
-        int left=0, right = 9;
-        while(left < right){
+        int left = 0, right = 9;
+        while (left < right) {
             int mid = (left + right) / 2 + 1;
-            if(number_greater(div[mid], rem)){
+            if (number_greater(div[mid], rem)) {
                 right = mid - 1;
-            }else{
+            }
+            else {
                 left = mid;
             }
         }
         finally_number.data.push_back(left);
-        if(left > 0){
+        if (left > 0) {
             rem = subtract(rem, div[left]);
             rem.pom = 1;
         }
-         //小数点向右移位
+        //小数点向右移位
         rem = multiplication(rem, ten);
-        if(idx < number1.data.size()){
+        if (idx < number1.data.size()) {
             number tmp;
             tmp.data.push_back(number1.data[idx]);
             tmp.size = 1;
@@ -726,7 +682,92 @@ inline number division(number number1, number number2) {
         }
         idx += 1;
         /// 去掉前导0
-        while(rem.size > 1 && rem.data[0] == 0){
+        while (rem.size > 1 && rem.data[0] == 0) {
+            rem.data.erase(rem.data.begin());
+            rem.size -= 1;
+        }
+    }
+    return finally_number;
+}
+inline number division(number number1, number number2,uint64_t npo) {
+    number finally_number;
+    finally_number.pom = number1.pom * number2.pom;
+    number1.pom = 1;
+    number2.pom = 1;
+    if (number1.size < number2.size) {
+        for (int x = 0; x < number2.size - number1.size; x++) {
+            finally_number.data.push_back(0);
+        }
+        finally_number.size = 1;
+        npo = npo - number2.size + number1.size;
+    }
+    else {
+        finally_number.size = number1.size - number2.size + 1;
+        npo = npo + number1.size - number2.size;
+    }
+    //除数
+    number div[10];
+    div[0].data.push_back(0);
+    div[0].size = 1;
+    div[0].pom = 1;
+    number2.size = number2.data.size();
+    for (short i = 1; i <= 9; i++) {
+        number tmp;
+        tmp.data.push_back(i);
+        tmp.size = 1;
+        tmp.pom = 1;
+        div[i] = multiplication(number2, tmp);
+        div[i] = accurate_to(div[i], div[i].size);
+    }
+    //余数
+    number rem;
+    int idx;
+    for (idx = 0; idx < number2.data.size(); idx++) {
+        if (idx >= number1.data.size()) {
+            rem.data.push_back(0);
+        }
+        else {
+            rem.data.push_back(number1.data[idx]);
+        }
+    }
+    number ten;
+    ten.data.push_back(1);
+    ten.data.push_back(0);
+    ten.size = 2;
+    ten.pom = 1;
+    rem.size = rem.data.size();
+    rem.pom = 1;
+    int rem_start = 0;
+    int div_start = 0;
+    for (uint64_t x = 0; x < npo; x++) {
+        //试除法，0-9中找最大的数
+        int left = 0, right = 9;
+        while (left < right) {
+            int mid = (left + right) / 2 + 1;
+            if (number_greater(div[mid], rem)) {
+                right = mid - 1;
+            }
+            else {
+                left = mid;
+            }
+        }
+        finally_number.data.push_back(left);
+        if (left > 0) {
+            rem = subtract(rem, div[left]);
+            rem.pom = 1;
+        }
+        //小数点向右移位
+        rem = multiplication(rem, ten);
+        if (idx < number1.data.size()) {
+            number tmp;
+            tmp.data.push_back(number1.data[idx]);
+            tmp.size = 1;
+            tmp.pom = 1;
+            rem = add(rem, tmp);
+        }
+        idx += 1;
+        /// 去掉前导0
+        while (rem.size > 1 && rem.data[0] == 0) {
             rem.data.erase(rem.data.begin());
             rem.size -= 1;
         }
